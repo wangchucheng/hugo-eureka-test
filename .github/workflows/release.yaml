@@ -48,6 +48,8 @@ jobs:
         github_token: ${{ secrets.RELEASE_GITHUB_TOKEN }}
         directory: starters
         repository: wangchucheng/hugo-eureka-starters-test
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
     - name: Release Starters
       uses: softprops/action-gh-release@v1
       with:
