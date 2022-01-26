@@ -9,8 +9,6 @@ jobs:
   sync-to-starters:
     runs-on: ubuntu-latest
     name: Sync to Starters
-    # permissions:
-    #   contents: write
     steps:
     - name: Checkout Eureka
       uses: actions/checkout@v2
@@ -36,6 +34,10 @@ jobs:
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: 'latest'
+    - name: Update Hugo Modules
+      run: |
+        cd starters
+        hugo mod get -u
     - name: Commit
       run: | 
         cd starters
@@ -56,8 +58,4 @@ jobs:
         repository: wangchucheng/hugo-eureka-starters-test
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
-    - name: Update Hugo Modules
-      run: |
-        cd starters
-        hugo mod get -u
     
