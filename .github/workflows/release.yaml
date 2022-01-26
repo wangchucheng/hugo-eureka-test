@@ -35,15 +35,15 @@ jobs:
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: 'latest'
-    - name: Commit and Push
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        repository: starters
-        commit_message: 'chore: upgrade to ${GITHUB_EVENT_REF}'
-      env:
-        GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
     - name: Cd to Starters
       run: cd starters
+    - name: Commit
+      run: 'git add . && git commit -m "chore: upgrade to ${{ env.GITHUB_REF }}"'
+    - name: Push
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+        repository: 'wangchucheng/hugo-eureka-starters-test'
     - name: Release Starters
       uses: softprops/action-gh-release@v1
       with:
