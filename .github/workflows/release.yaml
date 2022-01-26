@@ -8,7 +8,7 @@ on:
 jobs:
   sync-to-starters:
     runs-on: ubuntu-latest
-    name: Sync to Starters
+    name: Publish Starters
     steps:
     - name: Checkout Eureka
       uses: actions/checkout@v2
@@ -38,6 +38,7 @@ jobs:
       run: |
         cd starters
         hugo mod get -u
+        hugo mod tidy
     - name: Commit
       run: | 
         cd starters
@@ -45,7 +46,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add . && git commit -m "chore: upgrade to ${GITHUB_REF#refs/*/}"
         git config --unset-all http.https://github.com/.extraheader # https://stackoverflow.com/a/69979203
-    - name: Push
+    - name: Push to Starters
       uses: ad-m/github-push-action@v0.6.0
       with:
         github_token: ${{ secrets.RELEASE_GITHUB_TOKEN }}
