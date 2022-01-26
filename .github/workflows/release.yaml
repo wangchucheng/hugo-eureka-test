@@ -43,7 +43,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add . && git commit -m "chore: upgrade to ${{ env.GITHUB_REF }}"
         remote_repo="https://wangchucheng:${{ secrets.RELEASE_GITHUB_TOKEN }}@github.com/wangchucheng/hugo-eureka-starters-test.git"
-        git push "${remote_repo}" master
+        git push "${remote_repo}" monolingual
     - name: Push
       uses: ad-m/github-push-action@v0.6.0
       with:
