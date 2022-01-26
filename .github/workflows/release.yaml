@@ -36,19 +36,22 @@ jobs:
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: 'latest'
-    - name: Cd to Starters
-      run: cd starters && ls .
     - name: Commit
-      run: 'cd starters && git add . && git commit -m "chore: upgrade to ${{ env.GITHUB_REF }}"'
+      run: | 
+        cd starters
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add . && git commit -m "chore: upgrade to ${{ env.GITHUB_REF }}"
     - name: Push
       uses: ad-m/github-push-action@v0.6.0
       with:
         github_token: ${{ secrets.RELEASE_GITHUB_TOKEN }}
-        repository: 'wangchucheng/hugo-eureka-starters-test'
+        directory: starters
+        repository: wangchucheng/hugo-eureka-starters-test
     - name: Release Starters
       uses: softprops/action-gh-release@v1
       with:
-        repository: 'wangchucheng/hugo-eureka-starters-test'
+        repository: wangchucheng/hugo-eureka-starters-test
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
     - name: Update Hugo Modules
