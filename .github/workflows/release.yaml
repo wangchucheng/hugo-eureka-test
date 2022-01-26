@@ -1,0 +1,46 @@
+name: release
+
+on: 
+  release:
+    types:
+      - published
+
+jobs:
+  sync-to-starters:
+    runs-on: ubuntu-latest
+    name: Sync to Starters
+    steps:
+    - name: Checkout Eureka
+      uses: actions/checkout@v2
+      with:
+        path: 'eureka'
+    - name: Checkout Starters
+      uses: actions/checkout@v2
+      with:
+        repository: 'wangchucheng/hugo-eureka-starters-test'
+        path: 'starters'
+    - name: Delete Old Folders
+      run: rm -rf starters/config starters/content 
+    - name: Copy New Folders
+      run: | 
+        cp -r eureka/exampleSite/config/. starters/config
+        cp -r eureka/exampleSite/content/. starters/content
+    - name: Setup Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '^1.13.1'
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: 'latest'
+    - name: Cd to Starters
+      run: cd starters
+    - name: Release Starters
+      uses: softprops/action-gh-release@v1
+      with:
+        repository: 'wangchucheng/hugo-eureka-starters-test'
+    - name: Update Hugo Modules
+      run: |
+        cd starters
+        hugo mod get -u
+    
