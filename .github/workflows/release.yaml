@@ -36,7 +36,7 @@ jobs:
       with:
         hugo-version: 'latest'
     - name: Cd to Starters
-      run: cd starters
+      run: cd starters && ls .
     - name: Commit
       run: 'git add . && git commit -m "chore: upgrade to ${{ env.GITHUB_REF }}"'
     - name: Push
