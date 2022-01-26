@@ -19,6 +19,7 @@ jobs:
     - name: Checkout Starters
       uses: actions/checkout@v2
       with:
+        fetch-depth: 0
         repository: 'wangchucheng/hugo-eureka-starters-test'
         path: 'starters'
     - name: Delete Old Folders
