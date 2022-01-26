@@ -9,6 +9,8 @@ jobs:
   sync-to-starters:
     runs-on: ubuntu-latest
     name: Sync to Starters
+    permissions:
+      issues: write
     steps:
     - name: Checkout Eureka
       uses: actions/checkout@v2
