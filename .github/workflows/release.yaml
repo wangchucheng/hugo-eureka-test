@@ -1,12 +1,21 @@
 name: release
 
-on: 
-  release:
-    types:
-      - published
+on:
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
-  sync-to-starters:
+  release-eureka:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Eureka
+        uses: actions/checkout@v2
+      - name: Release Eureka
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+  release-starters:
     runs-on: ubuntu-latest
     name: Publish Starters
     steps:
@@ -44,7 +53,7 @@ jobs:
         cd starters
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add . && git commit -m "chore: upgrade to ${GITHUB_REF#refs/*/}"
+        git add . && git commit -m "chore: upgrade to Eureka ${GITHUB_REF#refs/*/v}"
         git config --unset-all http.https://github.com/.extraheader # https://stackoverflow.com/a/69979203
     - name: Push to Starters
       uses: ad-m/github-push-action@v0.6.0
